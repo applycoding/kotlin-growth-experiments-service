@@ -1,0 +1,35 @@
+type Query {
+  experiments: [Experiment!]!
+  experiment(key: String!): Experiment
+  results(key: String!, metric: String!): Results!
+}
+
+type Mutation {
+  createExperiment(key: String!, description: String!, variants: [VariantInput!]!, trafficPercent: Int): Experiment!
+  startExperiment(key: String!): Experiment!
+  stopExperiment(key: String!): Experiment!
+  assign(key: String!, userId: String!): Assignment!
+  trackConversion(key: String!, userId: String!, metric: String!): Boolean!
+}
+
+input VariantInput { name: String!, weight: Int! }
+
+enum Status { DRAFT RUNNING STOPPED }
+
+type Variant { name: String!, weight: Int! }
+
+type Experiment {
+  key: String!
+  description: String!
+  status: Status!
+  trafficPercent: Int!
+  variants: [Variant!]!
+}
+
+type Assignment { experimentKey: String!, userId: String!, variant: String, firstExposure: Boolean! }
+
+type VariantResult { variant: String!, exposures: Int!, conversions: Int!, rate: Float! }
+
+type Comparison { control: String!, treatment: String!, absoluteLift: Float!, z: Float!, pValue: Float!, significant: Boolean! }
+
+type Results { experimentKey: String!, metric: String!, variants: [VariantResult!]!, comparisons: [Comparison!]! }
