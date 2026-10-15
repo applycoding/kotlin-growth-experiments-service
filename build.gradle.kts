@@ -32,6 +32,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.graphql:spring-graphql-test")
+    testImplementation("org.springframework:spring-webflux") // WebTestClient backs HttpGraphQlTester
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
